@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>サウンドハウス - 音響機器・楽器の通販</title>
+<style>
+  /* ========== Reset & Base ========== */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", "Meiryo", sans-serif; background: #f5f5f5; color: #333; }
+  a { text-decoration: none; color: inherit; }
+  img { display: block; max-width: 100%; }
+
+  /* ========== Top Bar ========== */
+  .top-bar {
+    background: #222; color: #ccc; font-size: 11px; padding: 4px 0;
+    display: flex; justify-content: flex-end; gap: 16px; padding-right: 24px;
+  }
+  .top-bar a { color: #ccc; }
+  .top-bar a:hover { color: #fff; }
+
+  /* ========== Header ========== */
+  .header {
+    background: #fff; border-bottom: 3px solid #CC0000;
+    padding: 10px 24px; display: flex; align-items: center; gap: 20px;
+  }
+  .logo {
+    font-size: 28px; font-weight: 900; color: #CC0000; letter-spacing: -1px;
+    white-space: nowrap;
+  }
+  .logo span { color: #333; font-weight: 400; font-size: 12px; display: block; margin-top: -4px; }
+  .search-box {
+    flex: 1; max-width: 520px; display: flex;
+  }
+  .search-box input {
+    flex: 1; padding: 8px 12px; border: 2px solid #CC0000; border-right: none;
+    border-radius: 4px 0 0 4px; font-size: 14px; outline: none;
+  }
+  .search-box button {
+    background: #CC0000; color: #fff; border: 2px solid #CC0000;
+    border-radius: 0 4px 4px 0; padding: 8px 16px; cursor: pointer; font-size: 14px;
+  }
+  .header-actions {
+    display: flex; align-items: center; gap: 16px; margin-left: auto; font-size: 12px;
+  }
+  .header-actions a { display: flex; flex-direction: column; align-items: center; gap: 2px; color: #555; }
+  .header-actions a:hover { color: #CC0000; }
+  .header-icon { font-size: 20px; }
+
+  /* ========== Category Nav ========== */
+  .cat-nav {
+    background: #CC0000; display: flex; justify-content: center; gap: 0; flex-wrap: wrap;
+  }
+  .cat-nav a {
+    color: #fff; font-size: 13px; font-weight: 600; padding: 10px 18px;
+    transition: background 0.2s;
+  }
+  .cat-nav a:hover { background: #a00; }
+
+  /* ========== Banner ========== */
+  .banner {
+    background: linear-gradient(135deg, #CC0000 0%, #900 100%);
+    color: #fff; text-align: center; padding: 48px 24px;
+  }
+  .banner h2 { font-size: 32px; margin-bottom: 8px; }
+  .banner p { font-size: 16px; opacity: 0.9; }
+
+  /* ========== Sub Banner ========== */
+  .sub-banners {
+    display: flex; gap: 12px; max-width: 1100px; margin: 20px auto; padding: 0 24px;
+  }
+  .sub-banner {
+    flex: 1; background: #fff; border-radius: 8px; padding: 20px; text-align: center;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08); border-left: 4px solid #CC0000;
+  }
+  .sub-banner h3 { font-size: 14px; color: #CC0000; margin-bottom: 4px; }
+  .sub-banner p { font-size: 12px; color: #777; }
+
+  /* ========== Product Grid ========== */
+  .section-title {
+    max-width: 1100px; margin: 28px auto 12px; padding: 0 24px;
+    font-size: 18px; font-weight: 700; border-left: 4px solid #CC0000; padding-left: 12px;
+  }
+  .products {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 16px; max-width: 1100px; margin: 0 auto 32px; padding: 0 24px;
+  }
+  .product-card {
+    background: #fff; border-radius: 8px; overflow: hidden;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08); transition: box-shadow 0.2s;
+  }
+  .product-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.15); }
+  .product-img {
+    width: 100%; height: 180px; background: #eee; display: flex;
+    align-items: center; justify-content: center; color: #bbb; font-size: 48px;
+  }
+  .product-info { padding: 12px; }
+  .product-brand { font-size: 11px; color: #999; }
+  .product-name { font-size: 13px; font-weight: 600; margin: 4px 0; line-height: 1.3; }
+  .product-price { font-size: 16px; font-weight: 700; color: #CC0000; }
+  .product-price small { font-size: 11px; font-weight: 400; color: #999; }
+
+  /* ========== Footer ========== */
+  .footer {
+    background: #333; color: #999; text-align: center; padding: 24px;
+    font-size: 12px; margin-top: 40px;
+  }
+
+  /* ========== Widget Button ========== */
+  .widget-btn {
+    position: fixed; bottom: 28px; right: 28px; z-index: 9000;
+    width: 64px; height: 64px; border-radius: 50%; border: none;
+    background: linear-gradient(135deg, #0066CC, #0044AA);
+    color: #fff; font-size: 11px; font-weight: 700;
+    cursor: pointer; box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 2px;
+    transition: transform 0.2s, box-shadow 0.2s;
+    line-height: 1.2;
+  }
+  .widget-btn:hover {
+    transform: scale(1.1); box-shadow: 0 6px 28px rgba(0,0,0,0.4);
+  }
+  .widget-btn .widget-icon { font-size: 22px; }
+  .widget-btn .widget-label { font-size: 10px; }
+
+  /* ========== Pulse animation ========== */
+  .widget-btn::before {
+    content: ""; position: absolute; inset: -4px; border-radius: 50%;
+    border: 2px solid rgba(0,102,204,0.5);
+    animation: pulse 2s ease-out infinite;
+  }
+  @keyframes pulse {
+    0% { transform: scale(1); opacity: 1; }
+    100% { transform: scale(1.5); opacity: 0; }
+  }
+
+  /* ========== Modal Overlay ========== */
+  .modal-overlay {
+    position: fixed; inset: 0; z-index: 10000;
+    background: rgba(0,0,0,0.6); backdrop-filter: blur(4px);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; visibility: hidden;
+    transition: opacity 0.3s, visibility 0.3s;
+  }
+  .modal-overlay.open { opacity: 1; visibility: visible; }
+
+  /* ========== Modal Container ========== */
+  .modal-container {
+    background: #fff; border-radius: 12px; overflow: hidden;
+    width: 900px; max-width: 95vw; height: 85vh;
+    display: flex; flex-direction: column;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.4);
+    transform: scale(0.9) translateY(20px);
+    transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .modal-overlay.open .modal-container {
+    transform: scale(1) translateY(0);
+  }
+
+  /* ========== Modal Header ========== */
+  .modal-header {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 12px 20px; background: #0066CC; color: #fff; flex-shrink: 0;
+  }
+  .modal-title { font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+  .modal-close {
+    background: rgba(255,255,255,0.2); border: none; color: #fff;
+    width: 32px; height: 32px; border-radius: 50%; cursor: pointer;
+    font-size: 18px; display: flex; align-items: center; justify-content: center;
+    transition: background 0.2s;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.35); }
+
+  /* ========== Modal Body (iframe) ========== */
+  .modal-body { flex: 1; position: relative; }
+  .modal-body iframe {
+    width: 100%; height: 100%; border: none; display: block;
+  }
+  .modal-loading {
+    position: absolute; inset: 0; display: flex; align-items: center;
+    justify-content: center; background: #f9f9f9; color: #999; font-size: 14px;
+  }
+
+  /* ========== Mobile ========== */
+  @media (max-width: 640px) {
+    .header { flex-wrap: wrap; gap: 10px; }
+    .search-box { order: 3; max-width: 100%; }
+    .sub-banners { flex-direction: column; }
+    .modal-container {
+      width: 100vw; max-width: 100vw; height: 100vh;
+      border-radius: 0;
+    }
+    .widget-btn { bottom: 16px; right: 16px; width: 56px; height: 56px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Top Bar ===== -->
+<div class="top-bar">
+  <a href="#">お問い合わせ</a>
+  <a href="#">ご利用ガイド</a>
+  <a href="#">法人のお客様</a>
+</div>
+
+<!-- ===== Header ===== -->
+<div class="header">
+  <div class="logo">
+    SOUND HOUSE
+    <span>音響機器・楽器の通販</span>
+  </div>
+  <div class="search-box">
+    <input type="text" placeholder="商品名・型番・ブランドで検索">
+    <button>検索</button>
+  </div>
+  <div class="header-actions">
+    <a href="#"><span class="header-icon">&#128722;</span>カート</a>
+    <a href="#"><span class="header-icon">&#9825;</span>お気に入り</a>
+    <a href="#"><span class="header-icon">&#128100;</span>ログイン</a>
+  </div>
+</div>
+
+<!-- ===== Category Nav ===== -->
+<nav class="cat-nav">
+  <a href="#">ギター</a>
+  <a href="#">ベース</a>
+  <a href="#">キーボード</a>
+  <a href="#">ドラム</a>
+  <a href="#">PA音響</a>
+  <a href="#">レコーディング</a>
+  <a href="#">DJ機器</a>
+  <a href="#">照明</a>
+  <a href="#">マイク</a>
+  <a href="#">ケーブル</a>
+</nav>
+
+<!-- ===== Banner ===== -->
+<div class="banner">
+  <h2>SPRING SALE 2026</h2>
+  <p>対象商品 最大50%OFF &mdash; 4/30まで</p>
+</div>
+
+<!-- ===== Sub Banners ===== -->
+<div class="sub-banners">
+  <div class="sub-banner">
+    <h3>PLAYTECH</h3>
+    <p>初心者向けギター ¥7,980~</p>
+  </div>
+  <div class="sub-banner">
+    <h3>CLASSIC PRO</h3>
+    <p>PA機材がお買い得</p>
+  </div>
+  <div class="sub-banner">
+    <h3>ポイント5倍</h3>
+    <p>期間限定キャンペーン中</p>
+  </div>
+</div>
+
+<!-- ===== Product Grid ===== -->
+<h2 class="section-title">人気ランキング</h2>
+<div class="products">
+
+  <div class="product-card">
+    <div class="product-img">&#127928;</div>
+    <div class="product-info">
+      <div class="product-brand">PLAYTECH</div>
+      <div class="product-name">ST250 エレキギター ストラトタイプ</div>
+      <div class="product-price">¥7,980 <small>(税込)</small></div>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-img">&#127928;</div>
+    <div class="product-info">
+      <div class="product-brand">Fender</div>
+      <div class="product-name">Stratocaster American Professional II</div>
+      <div class="product-price">¥258,500 <small>(税込)</small></div>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-img">&#127928;</div>
+    <div class="product-info">
+      <div class="product-brand">Gibson</div>
+      <div class="product-name">Les Paul Standard '50s Heritage Cherry</div>
+      <div class="product-price">¥302,500 <small>(税込)</small></div>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-img">&#127929;</div>
+    <div class="product-info">
+      <div class="product-brand">Roland</div>
+      <div class="product-name">JUNO-DS61 シンセサイザー 61鍵</div>
+      <div class="product-price">¥75,900 <small>(税込)</small></div>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-img">&#127935;</div>
+    <div class="product-info">
+      <div class="product-brand">Pearl</div>
+      <div class="product-name">Export Series EXX725S/C ドラムセット</div>
+      <div class="product-price">¥99,000 <small>(税込)</small></div>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-img">&#127908;</div>
+    <div class="product-info">
+      <div class="product-brand">SHURE</div>
+      <div class="product-name">SM58 ダイナミックマイク</div>
+      <div class="product-price">¥15,450 <small>(税込)</small></div>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-img">&#127928;</div>
+    <div class="product-info">
+      <div class="product-brand">Martin</div>
+      <div class="product-name">D-28 アコースティックギター</div>
+      <div class="product-price">¥363,000 <small>(税込)</small></div>
+    </div>
+  </div>
+
+  <div class="product-card">
+    <div class="product-img">&#127928;</div>
+    <div class="product-info">
+      <div class="product-brand">YAMAHA</div>
+      <div class="product-name">LL16 ARE アコースティックギター</div>
+      <div class="product-price">¥82,500 <small>(税込)</small></div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ===== Footer ===== -->
+<div class="footer">
+  &copy; 2026 Sound House Inc. &mdash; これはAI査定 Widget の統合デモページです（実際のサウンドハウスとは関係ありません）
+</div>
+
+<!-- ===== Widget Button ===== -->
+<button class="widget-btn" id="widgetBtn" onclick="openWidget()">
+  <span class="widget-icon">&#9998;</span>
+  <span class="widget-label">AI 査定</span>
+</button>
+
+<!-- ===== Modal ===== -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeWidget(event)">
+  <div class="modal-container" onclick="event.stopPropagation()">
+    <div class="modal-header">
+      <div class="modal-title">&#9998; AI 楽器査定</div>
+      <button class="modal-close" onclick="closeWidget()">&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-loading" id="modalLoading">読み込み中...</div>
+      <iframe id="widgetIframe" src="about:blank" allow="camera"></iframe>
+    </div>
+  </div>
+</div>
+
+<!-- ===== Widget JS ===== -->
+<!--
+  ==========================================
+  実際の統合では、以下の1行だけで済みます:
+  <script src="https://your-domain.com/widget.js" data-site="soundhouse" data-api-key="sk_xxx"></script>
+  ==========================================
+-->
+<script>
+  const WIDGET_APP_URL = "http://localhost:8000";
+
+  function openWidget() {
+    const overlay = document.getElementById("modalOverlay");
+    const iframe = document.getElementById("widgetIframe");
+    const loading = document.getElementById("modalLoading");
+
+    overlay.classList.add("open");
+    document.body.style.overflow = "hidden";
+
+    if (iframe.src === "about:blank") {
+      loading.style.display = "flex";
+      iframe.src = WIDGET_APP_URL;
+      iframe.onload = function () {
+        loading.style.display = "none";
+      };
+    }
+  }
+
+  function closeWidget(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById("modalOverlay").classList.remove("open");
+    document.body.style.overflow = "";
+  }
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") closeWidget();
+  });
+</script>
+
+</body>
+</html>
