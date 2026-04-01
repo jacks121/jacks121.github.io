@@ -104,6 +104,23 @@
     font-size: 12px; margin-top: 40px;
   }
 
+  /* ========== Demo Tooltip Bubble ========== */
+  .demo-tooltip {
+    position: fixed; bottom: 110px; right: 28px; z-index: 8999;
+    background: #222; color: #fff; border-radius: 10px;
+    padding: 10px 14px; font-size: 13px; font-weight: 600;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+    display: flex; align-items: center; gap: 8px;
+    white-space: nowrap;
+  }
+  .demo-tooltip::after {
+    content: "";
+    position: absolute; bottom: -8px; right: 28px;
+    border: 8px solid transparent;
+    border-top-color: #222;
+    border-bottom: none;
+  }
+
   /* ========== Widget Button ========== */
   .widget-btn {
     position: fixed; bottom: 28px; right: 28px; z-index: 9000;
@@ -485,6 +502,11 @@
 <!-- ===== Footer ===== -->
 <div class="footer">
   &copy; 2026 Sound House Inc. &mdash; これはAI査定 Widget の統合デモページです（実際のサウンドハウスとは関係ありません）
+</div>
+
+<!-- ===== Demo Tooltip Bubble ===== -->
+<div class="demo-tooltip">
+  &#128073;&#65039; ここをクリック！AI査定デモ
 </div>
 
 <!-- ===== Widget Button ===== -->
