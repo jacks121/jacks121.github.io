@@ -29,7 +29,9 @@
     white-space: nowrap;
   }
   .logo span { color: #333; font-weight: 400; font-size: 12px; display: block; margin-top: -4px; }
-  .search-box { flex: 1; max-width: 520px; display: flex; }
+  .search-box {
+    flex: 1; max-width: 520px; display: flex;
+  }
   .search-box input {
     flex: 1; padding: 8px 12px; border: 2px solid #CC0000; border-right: none;
     border-radius: 4px 0 0 4px; font-size: 14px; outline: none;
@@ -104,28 +106,6 @@
     font-size: 12px; margin-top: 40px;
   }
 
-  /* ========== Demo Tooltip Bubble ========== */
-  .demo-tooltip {
-    position: fixed; bottom: 110px; right: 28px; z-index: 8999;
-    background: #222; color: #fff; border-radius: 10px;
-    padding: 14px 20px; font-size: 14px; font-weight: 600;
-    box-shadow: 0 4px 16px rgba(0,0,0,0.3);
-    white-space: nowrap;
-    animation: tooltipFloat 2s ease-in-out infinite;
-  }
-  .demo-tooltip .arrow { font-size: 20px; font-weight: 400; }
-  .demo-tooltip::after {
-    content: "";
-    position: absolute; bottom: -8px; right: 28px;
-    border: 8px solid transparent;
-    border-top-color: #222;
-    border-bottom: none;
-  }
-  @keyframes tooltipFloat {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-6px); }
-  }
-
   /* ========== Widget Button ========== */
   .widget-btn {
     position: fixed; bottom: 28px; right: 28px; z-index: 9000;
@@ -192,164 +172,17 @@
   }
   .modal-close:hover { background: rgba(255,255,255,0.35); }
 
-  /* ========== Modal Body (static) ========== */
-  .modal-body {
-    flex: 1; overflow-y: auto; padding: 24px;
-    background: #f9f9f9;
+  /* ========== Modal Body (iframe) ========== */
+  .modal-body { flex: 1; position: relative; }
+  .modal-body iframe {
+    width: 100%; height: 100%; border: none; display: block;
+  }
+  .modal-loading {
+    position: absolute; inset: 0; display: flex; align-items: center;
+    justify-content: center; background: #f9f9f9; color: #999; font-size: 14px;
   }
 
-  /* ===== Valuation Widget Styles ===== */
-  .vw-root { max-width: 100%; }
-
-  .vw-header {
-    text-align: center; margin-bottom: 24px;
-  }
-  .vw-header h2 {
-    font-size: 20px; color: #222; margin-bottom: 4px;
-  }
-  .vw-header p {
-    font-size: 13px; color: #888;
-  }
-
-  /* Step tabs */
-  .vw-steps {
-    display: flex; gap: 8px; margin-bottom: 20px;
-  }
-  .vw-step {
-    flex: 1; padding: 10px; border-radius: 8px;
-    background: #e0e0e0; text-align: center; font-size: 13px;
-    font-weight: 600; color: #888;
-  }
-  .vw-step.active {
-    background: #0066CC; color: #fff;
-  }
-  .vw-step.done {
-    background: #4CAF50; color: #fff;
-  }
-
-  /* Upload zone */
-  .vw-upload {
-    border: 2px dashed #ccc; border-radius: 12px;
-    padding: 40px 20px; text-align: center;
-    background: #fff; cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-    margin-bottom: 16px;
-  }
-  .vw-upload:hover { border-color: #0066CC; background: #f0f6ff; }
-  .vw-upload-icon { font-size: 48px; margin-bottom: 12px; }
-  .vw-upload-text { font-size: 14px; color: #555; }
-  .vw-upload-text strong { color: #0066CC; }
-  .vw-upload-sub { font-size: 12px; color: #aaa; margin-top: 6px; }
-
-  /* Preview */
-  .vw-preview {
-    display: flex; gap: 16px; margin-bottom: 16px; align-items: flex-start;
-  }
-  .vw-preview-img {
-    width: 140px; height: 140px; border-radius: 8px; object-fit: cover;
-    border: 1px solid #eee; flex-shrink: 0;
-  }
-  .vw-preview-info { flex: 1; }
-  .vw-preview-info h3 { font-size: 15px; color: #222; margin-bottom: 4px; }
-  .vw-preview-info p { font-size: 12px; color: #888; margin-bottom: 8px; }
-  .vw-detected {
-    display: inline-flex; align-items: center; gap: 4px;
-    background: #e8f4fd; color: #0066CC; border-radius: 20px;
-    padding: 3px 10px; font-size: 12px; font-weight: 600;
-  }
-
-  /* Result card */
-  .vw-result {
-    background: #fff; border-radius: 12px; padding: 20px;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.08); margin-bottom: 16px;
-  }
-  .vw-result-price {
-    text-align: center; padding: 16px 0; border-bottom: 1px solid #eee;
-    margin-bottom: 16px;
-  }
-  .vw-result-price .label {
-    font-size: 13px; color: #888; margin-bottom: 4px;
-  }
-  .vw-result-price .price {
-    font-size: 36px; font-weight: 900; color: #CC0000;
-  }
-  .vw-result-price .price small {
-    font-size: 14px; font-weight: 400; color: #999;
-  }
-  .vw-result-price .unit {
-    font-size: 12px; color: #888; margin-top: 2px;
-  }
-
-  /* Price range bar */
-  .vw-range { margin-bottom: 16px; }
-  .vw-range-labels {
-    display: flex; justify-content: space-between; font-size: 12px; color: #888; margin-bottom: 6px;
-  }
-  .vw-range-bar {
-    height: 8px; border-radius: 4px;
-    background: linear-gradient(to right, #4CAF50, #FFC107, #CC0000);
-    position: relative;
-  }
-  .vw-range-marker {
-    position: absolute; top: -4px; width: 16px; height: 16px;
-    background: #fff; border: 2px solid #0066CC; border-radius: 50%;
-    transform: translateX(-50%); top: -4px;
-  }
-
-  /* Confidence */
-  .vw-confidence { margin-bottom: 16px; }
-  .vw-confidence-label {
-    font-size: 12px; color: #888; margin-bottom: 6px;
-    display: flex; justify-content: space-between;
-  }
-  .vw-confidence-bar {
-    height: 6px; border-radius: 3px; background: #e0e0e0;
-  }
-  .vw-confidence-fill {
-    height: 6px; border-radius: 3px; background: #4CAF50;
-    width: 82%;
-  }
-
-  /* Factors */
-  .vw-factors { margin-bottom: 16px; }
-  .vw-factors-title { font-size: 13px; font-weight: 700; color: #333; margin-bottom: 8px; }
-  .vw-factor {
-    display: flex; align-items: center; gap: 8px; margin-bottom: 6px;
-    font-size: 13px; color: #555;
-  }
-  .vw-factor-dot {
-    width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0;
-  }
-  .vw-factor-dot.high { background: #4CAF50; }
-  .vw-factor-dot.mid { background: #FFC107; }
-  .vw-factor-dot.low { background: #CC0000; }
-
-  /* CTA */
-  .vw-cta {
-    display: flex; gap: 10px; margin-top: 16px;
-  }
-  .vw-btn {
-    flex: 1; padding: 12px; border-radius: 8px; font-size: 14px;
-    font-weight: 700; cursor: pointer; border: none; text-align: center;
-  }
-  .vw-btn-primary {
-    background: #CC0000; color: #fff;
-  }
-  .vw-btn-primary:hover { background: #a00000; }
-  .vw-btn-secondary {
-    background: #e0e0e0; color: #333;
-  }
-  .vw-btn-secondary:hover { background: #ccc; }
-
-  /* Integration badge */
-  .vw-badge {
-    display: inline-flex; align-items: center; gap: 6px;
-    background: #fff3cd; border: 1px solid #ffc107;
-    border-radius: 6px; padding: 6px 12px; font-size: 12px; color: #856404;
-    margin-bottom: 16px;
-  }
-
-  /* Mobile ========== */
+  /* ========== Mobile ========== */
   @media (max-width: 640px) {
     .header { flex-wrap: wrap; gap: 10px; }
     .search-box { order: 3; max-width: 100%; }
@@ -359,8 +192,6 @@
       border-radius: 0;
     }
     .widget-btn { bottom: 16px; right: 16px; width: 56px; height: 56px; }
-    .vw-preview { flex-direction: column; }
-    .vw-preview-img { width: 100%; height: 200px; }
   }
 </style>
 </head>
@@ -509,11 +340,6 @@
   &copy; 2026 Sound House Inc. &mdash; これはAI査定 Widget の統合デモページです（実際のサウンドハウスとは関係ありません）
 </div>
 
-<!-- ===== Demo Tooltip Bubble ===== -->
-<div class="demo-tooltip">
-  ここをクリック！AI診察デモ <span class="arrow">⤵</span>
-</div>
-
 <!-- ===== Widget Button ===== -->
 <button class="widget-btn" id="widgetBtn" onclick="openWidget()">
   <span class="widget-icon">&#9998;</span>
@@ -528,119 +354,37 @@
       <button class="modal-close" onclick="closeWidget()">&times;</button>
     </div>
     <div class="modal-body">
-
-      <!-- ===== Static Valuation Widget Demo ===== -->
-      <div class="vw-root">
-
-        <div class="vw-header">
-          <h2>中古楽器 AI 価格査定</h2>
-          <p>写真を撮るだけで瞬時に市場価格を推定</p>
-        </div>
-
-        <!-- Integration badge -->
-        <div class="vw-badge">
-          &#9881; SoundHouse に統合された AI  Појединаbles 估价Widget
-        </div>
-
-        <!-- Step indicator -->
-        <div class="vw-steps">
-          <div class="vw-step done">1. 撮影</div>
-          <div class="vw-step active">2. 分析</div>
-          <div class="vw-step">3. 結果</div>
-        </div>
-
-        <!-- Upload zone -->
-        <div class="vw-upload" id="uploadZone">
-          <div class="vw-upload-icon">&#128247;</div>
-          <div class="vw-upload-text">
-            <strong>楽器の写真を撮影</strong> または画像をドロップ
-          </div>
-          <div class="vw-upload-sub">対応形式：JPG, PNG, HEIC　最大10MB</div>
-        </div>
-
-        <!-- Preview -->
-        <div class="vw-preview">
-          <img class="vw-preview-img" src="https://images.unsplash.com/photo-1510915361894-db8b60106cb1?w=400&h=400&fit=crop" alt="Guitar">
-          <div class="vw-preview-info">
-            <h3>Fender Stratocaster American Pro II</h3>
-            <p>2019年製 / Sunburst / シリアル #: US190123456</p>
-            <span class="vw-detected">&#10003; 楽器を自動検出</span>
-          </div>
-        </div>
-
-        <!-- Result card -->
-        <div class="vw-result">
-          <div class="vw-result-price">
-            <div class="label">AI 推定売却価格</div>
-            <div class="price">¥215,000<small> ~ ¥248,000</small></div>
-            <div class="unit">市場相場の中央値 based on 1,247件の取引データ</div>
-          </div>
-
-          <!-- Range bar -->
-          <div class="vw-range">
-            <div class="vw-range-labels">
-              <span>¥180,000</span>
-              <span>¥215,000</span>
-              <span>¥260,000</span>
-            </div>
-            <div class="vw-range-bar">
-              <div class="vw-range-marker" style="left: 52%"></div>
-            </div>
-          </div>
-
-          <!-- Confidence -->
-          <div class="vw-confidence">
-            <div class="vw-confidence-label">
-              <span>推定信頼度</span>
-              <span>82%</span>
-            </div>
-            <div class="vw-confidence-bar">
-              <div class="vw-confidence-fill"></div>
-            </div>
-          </div>
-
-          <!-- Factors -->
-          <div class="vw-factors">
-            <div class="vw-factors-title">価格に影響した要因</div>
-            <div class="vw-factor">
-              <span class="vw-factor-dot high"></span>
-              年式（2019年製：行情堅調）
-            </div>
-            <div class="vw-factor">
-              <span class="vw-factor-dot mid"></span>
-              外観傷：小程度（ピックボード擦り傷あり）
-            </div>
-            <div class="vw-factor">
-              <span class="vw-factor-dot high"></span>
-              市場需要：高い（ストラトタイプ人気）
-            </div>
-            <div class="vw-factor">
-              <span class="vw-factor-dot low"></span>
-              弦の状態：交換推奨（ звучит 影响評価）
-            </div>
-          </div>
-
-          <!-- CTA -->
-          <div class="vw-cta">
-            <button class="vw-btn vw-btn-primary">&#9654; 売却相談する</button>
-            <button class="vw-btn vw-btn-secondary">&#8635; 撮り直す</button>
-          </div>
-        </div>
-
-        <p style="font-size:11px;color:#bbb;text-align:center;margin-top:8px;">
-          ※ 推定価格は参考値です。実際の收购価格は店舗评估後の確定となります。
-        </p>
-
-      </div>
-
+      <div class="modal-loading" id="modalLoading">読み込み中...</div>
+      <iframe id="widgetIframe" src="about:blank" allow="camera"></iframe>
     </div>
   </div>
 </div>
 
+<!-- ===== Widget JS ===== -->
+<!--
+  ==========================================
+  実際の統合では、以下の1行だけで済みます:
+  <script src="https://your-domain.com/widget.js" data-site="soundhouse" data-api-key="sk_xxx"></script>
+  ==========================================
+-->
 <script>
+  const WIDGET_APP_URL = "http://localhost:8000";
+
   function openWidget() {
-    document.getElementById("modalOverlay").classList.add("open");
+    const overlay = document.getElementById("modalOverlay");
+    const iframe = document.getElementById("widgetIframe");
+    const loading = document.getElementById("modalLoading");
+
+    overlay.classList.add("open");
     document.body.style.overflow = "hidden";
+
+    if (iframe.src === "about:blank") {
+      loading.style.display = "flex";
+      iframe.src = WIDGET_APP_URL;
+      iframe.onload = function () {
+        loading.style.display = "none";
+      };
+    }
   }
 
   function closeWidget(e) {
@@ -649,7 +393,7 @@
     document.body.style.overflow = "";
   }
 
-  document.addEventListener("keydown", function(e) {
+  document.addEventListener("keydown", function (e) {
     if (e.key === "Escape") closeWidget();
   });
 </script>
