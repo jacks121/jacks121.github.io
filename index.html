@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="ja"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Resonance AI | AI 楽器鑑定スタジオ</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-tint": "#775082",
+                        "primary-container": "#795284",
+                        "tertiary": "#434e0d",
+                        "surface-variant": "#e4e2e1",
+                        "tertiary-container": "#5b6624",
+                        "on-secondary-fixed": "#2c1600",
+                        "on-primary": "#ffffff",
+                        "on-secondary": "#ffffff",
+                        "on-tertiary": "#ffffff",
+                        "inverse-primary": "#e5b7f0",
+                        "secondary-fixed": "#ffdcbe",
+                        "on-primary-fixed": "#2e0b3a",
+                        "secondary": "#8a5100",
+                        "on-tertiary-fixed-variant": "#414b0a",
+                        "surface-container-low": "#fdfdfd",
+                        "surface-container": "#fbfbfb",
+                        "outline-variant": "#e2e2e2",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-high": "#f5f5f5",
+                        "inverse-on-surface": "#f2f0ef",
+                        "on-primary-fixed-variant": "#5d3969",
+                        "surface": "#ffffff",
+                        "on-surface": "#1b1c1b",
+                        "tertiary-fixed-dim": "#c0cd7f",
+                        "error-container": "#ffdad6",
+                        "secondary-container": "#fe990a",
+                        "on-background": "#1b1c1b",
+                        "primary-fixed-dim": "#e5b7f0",
+                        "on-secondary-container": "#643900",
+                        "on-tertiary-fixed": "#181e00",
+                        "outline": "#7e747e",
+                        "surface-dim": "#f5f5f5",
+                        "secondary-fixed-dim": "#ffb86f",
+                        "error": "#ba1a1a",
+                        "on-secondary-fixed-variant": "#693c00",
+                        "background": "#ffffff",
+                        "on-primary-container": "#f7ceff",
+                        "on-error-container": "#93000a",
+                        "primary": "#5f3a6b",
+                        "on-surface-variant": "#4c444d",
+                        "tertiary-fixed": "#ddea99",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#ffffff",
+                        "inverse-surface": "#303030",
+                        "primary-fixed": "#fad7ff",
+                        "on-tertiary-container": "#d6e493"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Plus Jakarta Sans", "Noto Sans JP"],
+                        "body": ["Inter", "Noto Sans JP"],
+                        "label": ["Inter", "Noto Sans JP"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', 'Noto Sans JP', sans-serif; }
+        .resonance-marker { display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
+        .resonance-line-long { width: 32px; height: 2px; background-color: #795284; }
+        .resonance-line-short { width: 8px; height: 2px; background-color: #f99501; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface h-screen flex flex-col overflow-hidden">
+<!-- Top Navigation -->
+<header class="sticky top-0 w-full flex justify-between items-center px-8 py-4 max-w-[1440px] mx-auto bg-white/80 backdrop-blur-xl z-50">
+<div class="text-xl font-bold tracking-tight text-[#1b1c1b]">
+            Resonance AI
+        </div>
+<nav class="hidden md:flex items-center gap-8">
+<a class="text-sm font-medium tracking-[0.05em] uppercase text-[#795284] border-b-2 border-[#795284] pb-1" href="#">鑑定ツール</a>
+<a class="text-sm font-medium tracking-[0.05em] uppercase text-[#1b1c1b]/70 hover:text-[#795284] transition-opacity duration-300" href="#">市場データ</a>
+<a class="text-sm font-medium tracking-[0.05em] uppercase text-[#1b1c1b]/70 hover:text-[#795284] transition-opacity duration-300" href="#">専門家鑑定</a>
+</nav>
+<div class="flex items-center gap-4">
+<button class="text-sm font-medium uppercase tracking-wider text-on-surface border border-outline-variant px-6 py-2 rounded-lg hover:bg-surface-container-low transition-all duration-200">サインイン</button>
+</div>
+</header>
+<!-- Main Workspace -->
+<main class="flex-grow w-full max-w-[1440px] mx-auto px-8 pb-8 flex gap-6 h-[calc(100vh-140px)]">
+<!-- Column 1: Upload Section -->
+<section class="w-1/3 flex flex-col h-full">
+<div class="resonance-marker">
+<div class="resonance-line-long"></div>
+<div class="resonance-line-short"></div>
+</div>
+<h2 class="text-2xl font-bold mb-6 font-headline tracking-tight">楽器画像のアップロード</h2>
+<div class="flex-grow flex flex-col bg-surface-container-low rounded-xl p-6 border border-outline-variant hover:border-primary-container/40 transition-colors duration-300 group relative">
+<div class="flex-grow flex flex-col items-center justify-center text-center">
+<span class="material-symbols-outlined text-6xl text-outline-variant mb-4 group-hover:text-primary-container/60 transition-colors">cloud_upload</span>
+<p class="text-lg font-medium text-on-surface-variant mb-2">ここにファイルをドロップ</p>
+<p class="text-sm text-on-surface-variant/60 mb-8">またはコンピュータから選択</p>
+<div class="grid grid-cols-2 gap-4 w-full mb-8">
+<div class="aspect-square bg-surface-container-lowest rounded-lg flex items-center justify-center overflow-hidden border border-outline-variant/50">
+<img class="w-full h-full object-cover" data-alt="close-up of a vintage violin with beautiful wood grain and elegant scrolls" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBD8aRt-GLG63sUW1YUBzYdBn4XY2D0XAkPDqMKd0oA9n3H7xUR_Xz5qapiG99jvSNew9xJ8oYC1u0gYKGWBxgB7sgqaDE9ga7eM1nWGsIW6QWWmNlVf88Q8C9KRMdtggRLFkMZrJPcMurPLk4kDdOt6GSjaGB3Z5ulEkd4571J7TO9LH8VdwNLmHZak8sfbyHGvWEZl4pVhl0LXIi4E96XeeGiQMrko8GhVy1I8SL7_Y4JQglts-iKW2I0DVMoXRbIvYFN9N42gfpq"/>
+</div>
+<div class="aspect-square bg-white rounded-lg flex items-center justify-center border border-dashed border-outline-variant">レスポール・スタンダード</div>
+</div>
+</div>
+<button class="w-full py-4 border border-[#f99501] text-[#8a5100] font-bold rounded-lg flex items-center justify-center gap-2 hover:bg-[#f99501]/5 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined text-xl">analytics</span>
+                    AI鑑定を開始する
+                </button>
+</div>
+</section>
+<!-- Column 2: AI Dialogue Log -->
+<section class="w-1/3 flex flex-col h-full bg-surface-container-low rounded-xl p-6 border border-outline-variant relative overflow-hidden">
+<div class="resonance-marker">
+<div class="resonance-line-long"></div>
+<div class="resonance-line-short"></div>
+</div>
+<h2 class="text-2xl font-bold mb-6 font-headline tracking-tight">AI 診断ログ</h2>
+<div class="flex-grow overflow-y-auto space-y-6 hide-scrollbar pr-2">
+<!-- User Message -->
+<div class="flex justify-end">
+<div class="max-w-[85%] bg-white border border-primary-container/20 text-on-surface rounded-2xl rounded-tr-none px-4 py-3 text-sm shadow-sm">
+                        1960年代のギブソン・レスポール・スタンダードの鑑定をお願いします。
+                    </div>
+</div>
+<!-- AI Message -->
+<div class="flex justify-start items-start gap-3">
+<div class="w-8 h-8 rounded-full border border-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-container text-sm">smart_toy</span>
+</div>
+<div class="max-w-[85%] bg-white border border-outline-variant rounded-2xl rounded-tl-none px-4 py-3 text-sm text-on-surface shadow-sm leading-relaxed">
+                        承知いたしました。アップロードされた画像を解析しています...<br/><br/>
+                        ヘッドストックのロゴ、ブリッジの摩耗具合、およびシリアルナンバーのフォントから判断すると、1968年後半のモデルである可能性が非常に高いです。
+                    </div>
+</div>
+<!-- AI Analysis Message -->
+<div class="flex justify-start items-start gap-3">
+<div class="w-8 h-8 rounded-full border border-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-primary-container text-sm">smart_toy</span>
+</div>
+<div class="max-w-[85%] bg-white border border-outline-variant rounded-2xl rounded-tl-none px-4 py-3 text-sm text-on-surface shadow-sm leading-relaxed">
+                        指板の材質はハカランダ（ブラジリアン・ローズウッド）のようです。これは希少価値を大幅に高める要素です。コンディションの詳細を確認するため、ピックアップ下の配線画像も追加できますか？
+                    </div>
+</div>
+</div>
+<!-- Input Area -->
+<div class="mt-6 pt-4 border-t border-outline-variant/50">
+<div class="relative">
+<input class="w-full bg-white border border-outline-variant focus:ring-0 focus:border-primary-container text-sm py-3 px-4 rounded-lg pr-12" placeholder="質問を入力..." type="text"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-primary-container/60 hover:text-primary-container">
+<span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</section>
+<!-- Column 3: Appraisal Result -->
+<section class="w-1/3 flex flex-col h-full gap-6">
+<div class="flex-grow bg-white rounded-xl p-8 shadow-sm border border-outline-variant">
+<div class="resonance-marker">
+<div class="resonance-line-long"></div>
+<div class="resonance-line-short"></div>
+</div>
+<h2 class="text-2xl font-bold mb-8 font-headline tracking-tight">鑑定結果</h2>
+<div class="space-y-8">
+<div>
+<p class="text-xs font-bold uppercase tracking-widest text-on-surface-variant/60 mb-1">査定金額（概算）</p>
+<p class="text-5xl font-extrabold tracking-tighter text-[#1b1c1b]">¥4,850,000</p>
+<div class="flex items-center gap-2 mt-2">
+<span class="inline-block w-2 h-2 rounded-full bg-[#f99501]"></span>
+<span class="text-xs font-bold text-[#8a5100] uppercase">市場信頼度：高</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-y-4 text-sm border-t border-outline-variant/30 pt-6">
+<div class="text-on-surface-variant/60">モデル名</div>
+<div class="font-bold text-right">レスポール・スタンダード</div>
+<div class="text-on-surface-variant/60">製造年</div>
+<div class="font-bold text-right">1968年-1969年前期</div>
+<div class="text-on-surface-variant/60">コンディション</div>
+<div class="font-bold text-right text-tertiary">極上品 (A+)</div>
+<div class="text-on-surface-variant/60">希少性</div>
+<div class="font-bold text-right">9.2 / 10</div>
+</div>
+</div>
+</div>
+<!-- Maximize Value Card -->
+<div class="bg-white p-6 rounded-xl border border-primary-container/30 shadow-sm relative overflow-hidden group">
+<div class="absolute -right-6 -bottom-6 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-500">
+<span class="material-symbols-outlined text-[140px]">trending_up</span>
+</div>
+<h3 class="text-lg font-bold mb-2 flex items-center gap-2 text-primary-container">
+<span class="material-symbols-outlined">workspace_premium</span>
+                    価値を最大化する
+                </h3>
+<p class="text-xs text-on-surface-variant/80 mb-4 leading-relaxed">
+                    提携する専門リペアショップでのメンテナンスにより、推定価格がさらに <span class="font-bold text-primary-container">¥400,000</span> 上昇する可能性があります。
+                </p>
+<button class="w-full py-3 bg-white border border-primary-container text-primary-container text-sm font-bold rounded-lg hover:bg-primary-container/[0.02] transition-colors active:scale-95 duration-200">詳細を見る</button>
+</div>
+</section>
+</main>
+<!-- Footer -->
+<footer class="w-full flex flex-col md:flex-row justify-between items-center px-8 py-8 mt-auto border-t border-outline-variant/30 bg-surface-container-low">
+<div></div>
+<div class="flex gap-8">
+<a class="text-xs font-medium text-[#1b1c1b]/60 hover:text-[#795284] transition-colors duration-200" href="#">プライバシーポリシー</a>
+<a class="text-xs font-medium text-[#1b1c1b]/60 hover:text-[#795284] transition-colors duration-200" href="#">利用規約</a>
+<a class="text-xs font-medium text-[#1b1c1b]/60 hover:text-[#795284] transition-colors duration-200" href="#">お問い合わせ</a>
+</div>
+</footer>
+</body></html>
